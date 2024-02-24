@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="кастом, одежда, творчество">
+    <title>Linderfull</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <script src="scripts/navActive.js"></script>
+    <script src="scripts/loadTime.js"></script>
+    <script src="scripts/order.js"></script>
+    <script src="scripts/loadImages.js"></script>
+    <script src="scripts/product.js" defer></script>
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+</head>
+<body onload="loadImages()">
+    <header>
+        <div class="banner-wrapper">
+            <div class="social-links-wrapper">
+                <a href="https://t.me/linderfull">
+                    <div class="telegram"></div>
+                </a>
+                <a href="">
+                    <div class="instagram"></div>
+                </a>
+            </div>
+            <div class="logo-wrapper">
+                <a id="top" href="index.html">
+                    <span>Linderfull</span>
+                </a>
+            </div>
+        </div>
+        <nav class="navigation-wrapper">
+            <ul class="nav-list">
+                <li class="button tile">
+                    <a href="index.html">главная</a>
+                </li>
+                <li class="button tile">
+                    <a href="gallery.html">галлерея</a>
+                </li>
+                <li class="button tile">
+                    <a href="posts.html">посты</a>
+                </li>
+                <li class="button tile">
+                    <a href="about.html">linderfull</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <div class="big-img">
+                <div class="big-text">
+                    <h1>Feel the custom</h1>
+                    <a href="#popup-wrapper" class="big-button" onclick="loadOrder()">
+                        <p>get your own</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+        <div id="popup-wrapper" class="popup-wrapper">
+            <div class="popup-content">
+                <form class="orderForm">
+                    <div>
+                        <label for="type">Тип вещи</label>
+                        <select id="type">
+                            <option value="t-shirt">футболка</option>
+                            <option value="trousers">штаны</option>
+                            <option value="hoodie">толстовка</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="idea">идея</label>
+                        <textarea id="idea" rows="4"></textarea>
+                    </div>
+                    <button onclick="saveOrder()">сделать заказ</button>
+                </form>
+                <div id="orderSummary"></div>
+                <a href="#"
+                   class="popup-close">
+                    ×
+                </a>
+            </div>
+        </div>
+        <section>
+            <div class="product-grid" id="grid">
+            </div>
+        </section>
+        <section>
+            <div class="swiper mySwiper" id="swiper">
+                <div class="swiper-wrapper" id="swiper-wrapper"></div>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="load"></div>
+        <ul class="footer-list">
+            <li class="button tile">
+                <a href="gallery.html">галлерея</a>
+            </li>
+            <li class="button tile">
+                <a href="delivery.html">доставка</a>
+            </li>
+            <li class="button tile">
+                <a href="posts.html">посты</a>
+            </li>
+        </ul>
+        <div class="back-to-top button tile">
+            <a href="#top">back to top</a>
+        </div>
+    </footer>
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            slidesPerView: 1,
+            spaceBetween: 10,
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            pagination: {
+                el: ".swiper-pagination",
+            },
+            mousewheel: true,
+            keyboard: true,
+        });
+    </script>
+</body>
