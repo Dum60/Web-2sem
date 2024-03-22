@@ -1,7 +1,6 @@
 const startTime = Date.now();
-
 window.addEventListener('load', () => {
-  const loadTime = Date.now() - startTime;
+  const clientTime = Date.now() - startTime;
   let element = document.querySelector('footer div');
-  element.textContent = `Время загрузки: ${loadTime} мс`;
+  element.textContent = `Время загрузки: ${clientTime} мс (клиент), ${serverTime} мс (сервер)`;
 });
