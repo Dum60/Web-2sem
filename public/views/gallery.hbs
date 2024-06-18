@@ -8,55 +8,15 @@
     <script src='../scripts/loadTime.js'></script>
 </head>
 <body>
-    <header>
-        <div class="banner-wrapper">
-            <div class="social-links-wrapper">
-                <a href="https://t.me/linderfull">
-                    <div class="telegram"></div>
-                </a>
-                <a href="">
-                    <div class="instagram"></div>
-                </a>
-            </div>
-            <div class="logo-wrapper">
-                <a id="top" href='index.hbs'>
-                    <span>Linderfull</span>
-                </a>
-            </div>
-        </div>
-        <nav class="navigation-wrapper">
-            <ul class="nav-list">
-                <li class="button tile">
-                    <a href='index.hbs'>главная</a>
-                </li>
-                <li class="button tile">
-                    <a href="gallery.html">галлерея</a>
-                </li>
-                <li class="button tile">
-                    <a href='posts.hbs'>посты</a>
-                </li>
-                <li class="button tile">
-                    <a href='about.hbs'>linderfull</a>
-                </li>
-            </ul>
-        </nav>
-    </header>
-    <footer>
-        <div class="load"></div>
-        <ul class="footer-list">
-            <li class="button tile">
-                <a href="gallery.html">галлерея</a>
-            </li>
-            <li class="button tile">
-                <a href='delivery.hbs'>доставка</a>
-            </li>
-            <li class="button tile">
-                <a href='posts.hbs'>посты</a>
-            </li>
-        </ul>
-        <div class="back-to-top button tile">
-            <a href="#top">back to top</a>
-        </div>
-    </footer>
+    {{> header}}
+    <main>
+      {{#each products}}
+        <div style='font-size: larger'>{{name}} price:{{price}} size:{{size}}</div>
+        <div>{{description}}</div>
+        <button style='margin-bottom: 20px'>Order</button>
+        <button>delete</button>
+      {{/each}}
+    </main>
+    {{> footer}}
 </body>
 </html>

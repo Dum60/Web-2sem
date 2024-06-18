@@ -1,18 +1,44 @@
-import { OrderInterface } from './oreder.interface';
-import { ProductInterface } from '../product/product.interface';
+import { OrderInterface } from './order.interface';
 import { Injectable } from '@nestjs/common';
+import prisma from '../main';
 
 @Injectable()
 export class OrderService {
   private readonly orders: OrderInterface[] = [];
 
-  create(products: OrderInterface) {}
-
-  findAll(): OrderInterface[] {
-    return this.orders;
+  async create(productId: number, targetEmail: string) {
+    const user = await prisma.user.findFirst({
+      where: {
+        email: targetEmail,
+      },
+    });
+    return prisma.order.create({
+      data: {
+        userId: user.id,
+        products: {
+          connect: { id: productId },
+        },
+      },
+    });
   }
 
-  findByUserId(id: string) {}
+  findAll() {
+    return prisma.order.findMany();
+  }
 
-  delete(id: string) {}
+  findByUserId(targetId: number) {
+    return prisma.order.findMany({
+      where: {
+        userId: targetId,
+      },
+    });
+  }
+
+  delete(targetId: number) {
+    prisma.order.delete({
+      where: {
+        id: targetId,
+      },
+    });
+  }
 }

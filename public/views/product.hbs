@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="кастом, одежда, творчество">
+  <title>Linderfull</title>
+  <link rel="stylesheet" href='../styles/style.css'>
+  {{> scripts}}
+  <script src='../scripts/order.js'></script>
+  <script src='../scripts/loadImages.js'></script>
+  <script src='../scripts/product.js' defer></script>
+  <script src='../scripts/toster.js'></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+  />
+
+</head>
+{{> header}}
+<body onload='socketOn()'>
+  <div>
+    <label for='id'>product id</label>
+      <input id='id' type='number'>
+  </div>
+  <div>
+    <label for='value'>new price</label>
+      <input id='value' type='number'>
+  </div>
+    <button onclick="changePrice()">Submit</button>
+  {{> footer}}
+</body>
+</html>

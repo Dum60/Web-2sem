@@ -3,28 +3,20 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { OrderController } from './order/order.controller';
 import { ProductController } from './product/product.controller';
-import { CustomController } from './custom/custom.controller';
 import { UserController } from './user/user.controller';
-import { CustomService } from './custom/custom.service';
 import { OrderService } from './order/order.service';
 import { ProductService } from './product/product.service';
 import { UserService } from './user/user.service';
+import { GatewayModule } from './gateway/gateway.module';
 
 @Module({
-  imports: [],
+  imports: [GatewayModule],
   controllers: [
     AppController,
     OrderController,
     ProductController,
-    CustomController,
     UserController,
   ],
-  providers: [
-    AppService,
-    CustomService,
-    OrderService,
-    ProductService,
-    UserService,
-  ],
+  providers: [AppService, OrderService, ProductService, UserService],
 })
 export class AppModule {}

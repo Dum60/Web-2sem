@@ -1,16 +1,7 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param, Patch,
-  Post,
-  Put,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { UserService } from './user.service';
 import { RegisterUserDto } from './dto/register-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
-import { UserInterface } from './user.interface';
 import {
   ApiCreatedResponse,
   ApiForbiddenResponse,
@@ -37,7 +28,7 @@ export class UserController {
     type: User,
   })
   async register(@Body() registerUserDto: RegisterUserDto) {
-    this.userService.register(registerUserDto);
+    return this.userService.register(registerUserDto);
   }
 
   @Get('login')
@@ -48,7 +39,8 @@ export class UserController {
     description: 'Logged in',
   })
   async login(@Body() loginUserDto: LoginUserDto) {
-    this.userService.login(loginUserDto);
+    await this.userService.login(loginUserDto);
+    return ApiOkResponse;
   }
 
   @Get('logout')
@@ -60,23 +52,8 @@ export class UserController {
   })
   @ApiUnauthorizedResponse({ description: 'Register or login' })
   async logout() {
-    this.userService.logout();
-  }
-
-  @Patch(':username')
-  @ApiOperation({
-    summary: 'Update existing user',
-  })
-  @ApiParam({ name: 'username', type: 'string' })
-  @ApiOkResponse({
-    description: 'User updated',
-  })
-  @ApiUnauthorizedResponse({ description: 'Register or login' })
-  async update(
-    @Param('username') username: string,
-    @Body() user: UserInterface,
-  ) {
-    this.userService.update(user);
+    await this.userService.logout();
+    return ApiOkResponse;
   }
 
   @Delete(':username')
@@ -89,7 +66,8 @@ export class UserController {
   })
   @ApiUnauthorizedResponse({ description: 'Register or login' })
   async delete(@Param('username') username: string) {
-    this.userService.delete(username);
+    await this.userService.delete(username);
+    return ApiOkResponse;
   }
 
   @Get('all')

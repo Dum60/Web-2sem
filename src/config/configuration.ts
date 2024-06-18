@@ -1,5 +1,5 @@
 import * as process from 'process';
 
 export default () => ({
-  port: parseInt(process.env.PORT, 10) || 2309,
+  port: parseInt(process.env.PORT, 10) || 3000,
 });

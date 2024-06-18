@@ -13,6 +13,10 @@ export class AppController {
   @Render('index')
   root() {}
 
+  @Get('productTest')
+  @Render('product')
+  product() {}
+
   @Get('delivery')
   @Render('delivery')
   delivery() {}

@@ -6,7 +6,8 @@ import {
   Param,
   Patch,
   Post,
-
+  Render,
+  UseGuards,
 } from '@nestjs/common';
 import { ProductInterface } from './product.interface';
 import { ProductService } from './product.service';
@@ -20,9 +21,11 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { Product } from './product';
+import { RolesGuard } from '../guards/roles.guard';
 
 @ApiTags('Product')
 @Controller('product')
+@UseGuards(RolesGuard)
 export class ProductController {
   constructor(private productService: ProductService) {}
 
@@ -36,20 +39,24 @@ export class ProductController {
   })
   @ApiForbiddenResponse({ description: 'Forbidden.' })
   async Create(@Body() product: Product) {
-    this.productService.create(product);
+    return this.productService.create(product);
   }
 
-  @Patch(':id')
+  @Patch(':id/:price')
   @ApiOperation({
-    summary: 'Update existing product',
+    summary: 'Update price of existing product',
   })
-  @ApiParam({ name: 'id', type: 'string' })
+  @ApiParam({ name: 'id', type: 'number' })
+  @ApiParam({ name: 'id', type: 'number' })
   @ApiOkResponse({
-    description: 'Product updated',
+    description: 'Product price updated',
   })
   @ApiForbiddenResponse({ description: 'Forbidden.' })
-  async Update(@Param('id') id: string, @Body() product: ProductInterface) {
-    this.productService.update(product);
+  async UpdatePrice(
+    @Param('id') targetId: number,
+    @Param('price') price: number,
+  ) {
+    return this.productService.update(targetId, price);
   }
 
   @Delete(':id')
@@ -61,8 +68,9 @@ export class ProductController {
     description: 'Product deleted',
   })
   @ApiForbiddenResponse({ description: 'Forbidden.' })
-  async DeleteById(@Param('id') id: string) {
-    this.productService.delete(id);
+  async DeleteById(@Param('id') targetId: number) {
+    this.productService.delete(targetId);
+    return ApiOkResponse;
   }
 
   @Get(':id')
@@ -74,18 +82,19 @@ export class ProductController {
     description: 'Product found',
     type: Product,
   })
+  @Render('gallery')
   @ApiForbiddenResponse({ description: 'Forbidden.' })
-  async findById(@Param('id') id: string) {
-    this.productService.findById(id);
+  async findById(@Param('id') targetId: number) {
+    return { products: [await this.productService.findById(targetId)] };
   }
 
   @Get()
   @ApiOperation({
     summary: 'Find all products',
   })
-  @ApiParam({ name: 'id', type: 'string' })
   @ApiForbiddenResponse({ description: 'Forbidden.' })
+  @Render('gallery')
   async findAll() {
-    this.productService.findAll();
+    return { products: await this.productService.findAll() };
   }
 }

@@ -1,5 +1,4 @@
 import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
-import { OrderInterface } from './oreder.interface';
 import { OrderService } from './order.service';
 import {
   ApiCreatedResponse,
@@ -17,7 +16,7 @@ import { Order } from './order';
 @Controller('order')
 export class OrderController {
   constructor(private orderService: OrderService) {}
-  @Get(':id')
+  @Get(':userId')
   @ApiOperation({
     summary: 'Find orders by user id',
   })
@@ -27,11 +26,11 @@ export class OrderController {
     type: [Order],
   })
   @ApiForbiddenResponse({ description: 'Forbidden.' })
-  async findByUserId(@Param('id') id: string) {
-    this.orderService.findByUserId(id);
+  async findByUserId(@Param('userId') id: number) {
+    return this.orderService.findByUserId(id);
   }
 
-  @Post()
+  @Post(':productId')
   @ApiOperation({
     summary: 'Create order',
   })
@@ -40,8 +39,8 @@ export class OrderController {
     type: Order,
   })
   @ApiUnauthorizedResponse({ description: 'Register or login' })
-  async Create(@Body() order: OrderInterface) {
-    this.orderService.create(order);
+  async Create(@Param('productId') productId: number, @Body() email: string) {
+    return this.orderService.create(productId, email);
   }
 
   @Delete(':id')
@@ -54,7 +53,8 @@ export class OrderController {
   })
   @ApiForbiddenResponse({ description: 'Forbidden.' })
   @ApiUnauthorizedResponse({ description: 'Register or login' })
-  async DeleteById(@Param() id: string) {
+  async DeleteById(@Param() id: number) {
     this.orderService.delete(id);
+    return ApiOkResponse;
   }
 }
